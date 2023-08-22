@@ -1,0 +1,16 @@
+import React from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useAuthContext } from "./useAuthContext";
+import { useTasksContext } from "./useTasksContext";
+
+export const useLogout = () => {
+  const { dispatch } = useAuthContext();
+  const { dispatch: tasksDispatch } = useTasksContext();
+  const logout = () => {
+    // remove user from starage
+    localStorage.removeItem("user");
+    dispatch({ type: "LOGOUT" });
+    tasksDispatch({ type: "SET_TASKS", payload: null });
+  };
+  return { logout };
+};
